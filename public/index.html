@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Health & Wellness</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <div class="brand">WellnessFlow</div>
+        <nav class="nav">
+          <a href="#">Dashboard</a>
+          <a href="#">Workouts</a>
+          <a href="#">Nutrition</a>
+          <button class="logout-btn" id="logout-btn" type="button">Log out</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="card">
+            <p class="eyebrow">Your wellness dashboard</p>
+            <h1> Insert Text Here.</h1>
+            <p>
+              Insert Text Here. (A lot of this is placeholder text)
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn" type="button">View plan</button>
+              <button class="secondary-btn" type="button">Log meal</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Today at a glance</h2>
+            <div class="stat-grid">
+              <div class="stat-box">
+                <span class="stat-label">Steps</span>
+                <span class="stat-value">0</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-label">Sleep</span>
+                <span class="stat-value">0h</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-label">Protein</span>
+                <span class="stat-value">0g</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-label">Badges</span>
+                <span class="stat-value">0</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="card">
+            <h2 class="form-title">Set a personal goal</h2>
+            <form id="goal-form" class="goal-form">
+              <label>
+                Goal title
+                <input type="text" id="goal-title" placeholder="30-day cardio challenge" required />
+              </label>
+
+              <div class="form-row">
+                <label>
+                  Goal type
+                  <select id="goal-type">
+                    <option value="weight loss">Weight loss</option>
+                    <option value="bigger arms">Bigger arms</option>
+                    <option value="lose belly fat">Lose belly fat</option>
+                    <option value="muscle gain">Muscle gain</option>
+                  </select>
+                </label>
+
+                <label>
+                  Fitness level
+                  <select id="goal-fitness-level">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  Equipment
+                  <input type="text" id="goal-equipment" placeholder="Dumbbells, mat" />
+                </label>
+
+                <label>
+                  Daily steps
+                  <input type="number" id="goal-steps" min="0" placeholder="8000" />
+                </label>
+              </div>
+
+              <label>
+                Notes
+                <input type="text" id="goal-notes" placeholder="Target weight, focus areas, plan notes" />
+              </label>
+
+              <button type="submit" class="primary-btn">Save goal</button>
+            </form>
+            <p id="goal-message" class="message" aria-live="polite"></p>
+          </div>
+
+          <div class="card">
+            <h2 class="form-title">Log today’s meal</h2>
+            <form id="meal-form" class="meal-form">
+              <label>
+                Meal name
+                <input type="text" id="meal-name" placeholder="Chicken rice bowl" required />
+              </label>
+
+              <div class="form-row">
+                <label>
+                  Meal type
+                  <select id="meal-type">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                  </select>
+                </label>
+
+                <label>
+                  Calories
+                  <input type="number" id="meal-calories" min="0" placeholder="450" required />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  Protein (g)
+                  <input type="number" id="meal-protein" min="0" placeholder="32" />
+                </label>
+
+                <label>
+                  Carbs (g)
+                  <input type="number" id="meal-carbs" min="0" placeholder="45" />
+                </label>
+              </div>
+
+              <label>
+                Fats (g)
+                <input type="number" id="meal-fats" min="0" placeholder="15" />
+              </label>
+
+              <button type="submit" class="primary-btn">Save meal</button>
+            </form>
+            <p id="meal-message" class="message" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top: 28px;">
+          <h2>Recent wellness summary</h2>
+          <div class="summary-card">
+            <strong>Workout streak</strong>
+            <span>12 days</span>
+          </div>
+          <div class="summary-card">
+            <strong>Hydration target</strong>
+            <span>2.5L / 3.0L</span>
+          </div>
+          <div class="summary-card">
+            <strong>Recommended protein</strong>
+            <span>120g today</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wellness App | Login</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-shell">
+      <section class="auth-panel auth-hero">
+        <p class="eyebrow">Digital Health & Wellness</p>
+        <h1>Build your strongest routine.</h1>
+        <p>
+          A place to track your meals, fitness goals, personalized workouts, and physicall wellness.
+        </p>
+        <ul>
+          <li>Create Personalized plans</li>
+          <li>Develop Meal and Fitness tracking plans</li>
+          <li>Achieve Progress badges</li>
+        </ul>
+      </section>
+
+      <section class="auth-panel auth-form-panel">
+        <div class="tab-row">
+          <button class="tab active" data-tab="login" type="button">Log In</button>
+          <button class="tab" data-tab="signup" type="button">Sign Up</button>
+        </div>
+
+        <form id="login-form" class="auth-form active">
+          <h2>Welcome Back!</h2>
+          <label>
+            Email
+            <input type="email" id="login-email" placeholder="your@email.com" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="login-password" placeholder="Password" required />
+          </label>
+          <button type="submit" class="primary-btn">Log In</button>
+        </form>
+
+        <form id="signup-form" class="auth-form">
+          <h2>Create account</h2>
+          <label>
+            Full name
+            <input type="text" id="signup-name" placeholder="Jane Doe" required />
+          </label>
+          <label>
+            Email
+            <input type="email" id="signup-email" placeholder="your@email.com" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="signup-password" placeholder="Create password" required />
+          </label>
+          <label>
+            Fitness goal
+            <select id="signup-goal">
+              <option value="weight loss">Weight loss</option>
+              <option value="bigger arms">Insert More Options Here</option>
+            </select>
+          </label>
+          <button type="submit" class="primary-btn">Sign Up</button>
+        </form>
+
+        <p id="auth-message" class="message" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
