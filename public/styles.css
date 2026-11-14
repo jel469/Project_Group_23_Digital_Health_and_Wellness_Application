@@ -1,13 +1,13 @@
 :root {
-  --bg: #f4f7fb;
+  --bg: #f5f1ff;
   --panel: #ffffff;
-  --primary: #2e8bff;
-  --primary-dark: #1d5fc7;
-  --accent: #11b98f;
-  --text: #1b2430;
-  --muted: #5c6b7a;
-  --border: #dfeaf5;
-  --shadow: 0 14px 42px rgba(42, 87, 143, 0.12);
+  --primary: #6d4ecf;
+  --primary-dark: #5034a9;
+  --accent: #b38cff;
+  --text: #1f1830;
+  --muted: #5e5478;
+  --border: #e7ddff;
+  --shadow: 0 14px 42px rgba(89, 62, 159, 0.14);
 }
 
 * {
@@ -17,7 +17,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #eef6ff 0%, #f7fbff 100%);
+  background: linear-gradient(135deg, #f8f4ff 0%, #ffffff 100%);
   color: var(--text);
 }
 
@@ -49,7 +49,7 @@ select {
 }
 
 .auth-hero {
-  background: linear-gradient(180deg, #1d5fc7 0%, #0f6acc 100%);
+  background: linear-gradient(180deg, #5c3ec8 0%, #8b69e8 100%);
   color: white;
 }
 
@@ -102,7 +102,7 @@ select {
 }
 
 .tab.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   border-color: var(--primary);
   color: white;
 }
@@ -144,12 +144,13 @@ select {
 .primary-btn {
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   color: white;
   padding: 14px 18px;
   font-weight: 700;
   cursor: pointer;
   margin-top: 8px;
+  box-shadow: 0 10px 22px rgba(109, 78, 207, 0.22);
 }
 
 .message {
@@ -164,7 +165,7 @@ select {
 }
 
 .message.success {
-  color: var(--accent);
+  color: #6d4ecf;
 }
 
 .container {
@@ -249,7 +250,7 @@ select {
 }
 
 .stat-box {
-  background: linear-gradient(180deg, #f8fbff, #eef6ff);
+  background: linear-gradient(180deg, #faf6ff, #f2ebff);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px;
