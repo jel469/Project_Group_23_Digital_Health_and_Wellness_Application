@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WellnessFlow - User Profile</title>
+  
+  <!-- existing stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* 3 column grid for fitness goals, personal logs, and suggestions */
+    .profile-three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    /* greeting and avatar circle on the top right */
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+
+    .avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+    }
+
+    /* personal videos */
+    .video-section {
+      max-width: 380px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+
+    .video-placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 220px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .video-placeholder:hover {
+      transform: translateY(-3px);
+    }
+
+    .video-icon {
+      font-size: 60px;
+    }
+
+    @media (max-width: 900px) {
+      .profile-three-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- TOP NAVIGATION BAR-->
+    <header class="topbar">
+      <div class="brand">Profile</div>
+
+      <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="nutrition.html">Nutrition</a>
+        
+        <div class="user-badge">
+          <span id="user-greeting">Hello User!</span>
+          <!--Eventually add something here to display the users name-->
+          <div class="avatar-circle" id="user-avatar" title="User Profile Picture">
+            &#128100;<!--Placeholder, replace this with a profile picture if we implement that. If not this section gets deleted-->
+          </div>
+        </div>
+
+        <button class="logout-btn" id="logout-btn" type="button">Log out</button><!--Need to hook this up to the backend still-->
+      </nav>
+    </header>
+
+    <!--MAIN CONTENT-->
+    <main>
+      <section class="profile-three-col">
+
+        <!-- CARD 1: FITNESS GOALS -->
+        <section class="card">
+          <p class="eyebrow">Your Targets</p>
+          <h2 class="form-title">Fitness Goals</h2>
+          <!--Link up to saved data from server for user goals-->
+          <div id="fitness-goals-content">
+            <p style="color: var(--muted); line-height: 1.6;">
+              Your goals here
+            </p>
+          </div>
+        </section>
+
+        <!-- CARD 2: PERSONAL LOGS -->
+        <section class="card">
+          <p class="eyebrow">Recent Activity</p>
+          <h2 class="form-title">Personal Logs</h2>
+          <!--link up same as card 1-->
+          <div id="personal-logs-content">
+            <p style="color: var(--muted); line-height: 1.6;">
+              Your logs here
+            </p>
+          </div>
+        </section>
+
+        <!-- CARD 3: SUGGESTIONS-->
+        <section class="card">
+          <p class="eyebrow">From Us!</p>
+          <h2 class="form-title">Suggestions</h2>
+          <!--This is from the original proposal, if we can figure out how to make this work great, if not we can probably delete this section-->
+          <div id="suggestions-content">
+            <p style="color: var(--muted); line-height: 1.6;">
+              Our personalized suggestions here
+            </p>
+          </div>
+        </section>
+
+      </section>
+
+      <!-- BOTTOM SECTION, your personal videos -->
+      <section class="video-section">
+        <h3 class="form-title">Your Personal Videos</h3>
+        
+        <!--Replace placeholders with actual user videos and scale card appropriately-->
+        <div class="card video-placeholder" id="personal-videos-container" role="button" tabindex="0">
+          <div>
+            <div class="video-icon" aria-hidden="true">&#127916;</div><!--The video icon can stay as a placeholder  for when the user has no saved videos-->
+            <p style="color: var(--muted); margin: 12px 0 0; font-weight: 600;">
+              No saved videos yet
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+  </div>
+
+    
