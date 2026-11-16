@@ -313,6 +313,133 @@ select {
   border-bottom: none;
 }
 
+.community-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin: 26px 0;
+}
+
+.community-heading h1 {
+  margin: 0 0 8px;
+}
+
+.community-heading p:last-child,
+.post-metadata {
+  color: var(--muted);
+}
+
+.post-composer {
+  margin-bottom: 24px;
+}
+
+.post-feed-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.post-feed-controls select {
+  min-width: 180px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fbfdff;
+  color: var(--text);
+  font: inherit;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.post-form[hidden] {
+  display: none;
+}
+
+.post-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.post-form input,
+.post-form textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #fbfdff;
+  color: var(--text);
+  font: inherit;
+}
+
+.post-form textarea {
+  resize: vertical;
+}
+
+.post-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.post-feed #post-list {
+  display: grid;
+  gap: 18px;
+}
+
+.community-post h2 {
+  margin: 0 0 8px;
+}
+
+.community-post .post-metadata {
+  margin: 0 0 18px;
+  font-size: 0.9rem;
+}
+
+.community-post .post-contents {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.delete-post-btn {
+  color: #b42318;
+}
+
+.edit-post-form {
+  margin-top: 18px;
+}
+
+.community-post img,
+.community-post video {
+  display: block;
+  width: min(100%, 680px);
+  max-height: 520px;
+  margin-top: 14px;
+  border-radius: 14px;
+  object-fit: contain;
+  background: #f5f1ff;
+}
+
+.empty-feed {
+  color: var(--muted);
+}
+
 .summary-card strong {
   font-size: 1.05rem;
 }
@@ -327,5 +454,10 @@ select {
   .topbar {
     flex-direction: column;
     gap: 12px;
+  }
+
+  .community-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
