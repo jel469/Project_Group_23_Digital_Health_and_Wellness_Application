@@ -1,5 +1,8 @@
+// Handles login, dashboard actions, and community feed interactions.
 const userStorageKey = 'wellness-user';
 
+// Handles the Checks of if the user is signed in,
+// if not redirect to login page
 const ensureLoggedIn = () => {
   const user = JSON.parse(localStorage.getItem(userStorageKey) || 'null');
   if (!user && window.location.pathname !== '/login') {
@@ -42,6 +45,7 @@ const request = async (url, options = {}) => {
   return data;
 };
 
+// Handling login and signup page behavior
 const initLoginPage = () => {
   const tabs = document.querySelectorAll('.tab');
   const forms = {
@@ -106,6 +110,8 @@ const initLoginPage = () => {
   });
 };
 
+// Home dashboard behavior for saving goals and meals.
+// Personal tracking goals, meal logging, and fitness tracking. WIP
 const initHomePage = () => {
   const user = ensureLoggedIn();
   if (!user) return;
@@ -171,6 +177,7 @@ const initHomePage = () => {
   });
 };
 
+// Community feed behavior 
 const initCommunityPage = () => {
   const user = ensureLoggedIn();
   if (!user) return;
@@ -210,6 +217,7 @@ const initCommunityPage = () => {
       return;
     }
 
+    // Fetch and display posts based on the selected feed listed here
     try {
       const posts = await request(`/api/posts?feed=${encodeURIComponent(feed)}`);
       if (posts.length === 0) {
@@ -257,22 +265,22 @@ const initCommunityPage = () => {
 
         if (Number(post.user_id) === Number(user.id)) {
           const actions = document.createElement('div');
-          actions.className = 'post-actions';
+          actions.className = 'user-post-controls';
 
           const editButton = document.createElement('button');
-          editButton.className = 'secondary-btn';
+          editButton.className = 'ghost-action-btn';
           editButton.type = 'button';
           editButton.textContent = 'Edit';
           editButton.setAttribute('aria-expanded', 'false');
           editButton.setAttribute('aria-controls', `edit-post-${post.id}`);
 
           const deleteButton = document.createElement('button');
-          deleteButton.className = 'secondary-btn delete-post-btn';
+          deleteButton.className = 'danger-action-btn';
           deleteButton.type = 'button';
           deleteButton.textContent = 'Delete';
 
           const editForm = document.createElement('form');
-          editForm.className = 'post-form edit-post-form';
+          editForm.className = 'edit-post-box';
           editForm.id = `edit-post-${post.id}`;
           editForm.hidden = true;
           const titleLabel = document.createElement('label');
@@ -295,13 +303,13 @@ const initCommunityPage = () => {
           contentsLabel.append(contentsInput);
 
           const formActions = document.createElement('div');
-          formActions.className = 'post-form-actions';
+          formActions.className = 'edit-post-footer';
           const saveButton = document.createElement('button');
-          saveButton.className = 'primary-btn';
+          saveButton.className = 'save-post-btn';
           saveButton.type = 'submit';
           saveButton.textContent = 'Save changes';
           const cancelButton = document.createElement('button');
-          cancelButton.className = 'secondary-btn';
+          cancelButton.className = 'cancel-post-btn';
           cancelButton.type = 'button';
           cancelButton.textContent = 'Cancel';
           formActions.append(saveButton, cancelButton);
@@ -362,6 +370,7 @@ const initCommunityPage = () => {
 
   feedFilter.addEventListener('change', loadPosts);
 
+  // Handling post submission
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     showMessage(message, '');
@@ -385,6 +394,7 @@ const initCommunityPage = () => {
   loadPosts();
 };
 
+// Initialize the appropriate page
 document.addEventListener('DOMContentLoaded', () => {
   if (window.location.pathname === '/login' || window.location.pathname === '/login.html') {
     initLoginPage();

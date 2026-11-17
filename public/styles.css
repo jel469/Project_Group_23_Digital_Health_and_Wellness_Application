@@ -141,7 +141,8 @@ select {
   background: #fbfdff;
 }
 
-.primary-btn {
+.primary-btn,
+.save-post-btn {
   border: none;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -233,7 +234,9 @@ select {
   gap: 12px;
 }
 
-.secondary-btn {
+.secondary-btn,
+.ghost-action-btn,
+.cancel-post-btn {
   border: 1px solid var(--border);
   background: white;
   border-radius: 12px;
@@ -386,7 +389,8 @@ select {
   resize: vertical;
 }
 
-.post-form-actions {
+.post-form-actions,
+.edit-post-footer {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -411,17 +415,20 @@ select {
   white-space: pre-wrap;
 }
 
-.post-actions {
+.post-actions,
+.user-post-controls {
   display: flex;
   gap: 10px;
   margin-top: 18px;
 }
 
-.delete-post-btn {
+.delete-post-btn,
+.danger-action-btn {
   color: #b42318;
 }
 
-.edit-post-form {
+.edit-post-form,
+.edit-post-box {
   margin-top: 18px;
 }
 

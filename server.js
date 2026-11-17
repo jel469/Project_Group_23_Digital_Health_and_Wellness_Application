@@ -1,3 +1,4 @@
+// Configures Express, PostgreSQL, authentication, and media upload routes
 const express = require('express');
 const path = require('path');
 const fs = require('fs/promises');
@@ -21,6 +22,7 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
+// Configure file upload handling for community posts and media files
 const postUpload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 25 * 1024 * 1024, files: 5, fields: 2, fieldSize: 15000 },
@@ -138,6 +140,7 @@ app.use('/uploads', (req, res) => res.status(404).json({ message: 'Photo not fou
 app.use(express.json());
 app.use(express.static(path.join(projectRoot, 'public')));
 
+// Set up database tables and seed workout plans 
 async function initializeDatabase() {
   try {
     await pool.query(`
@@ -228,6 +231,7 @@ async function initializeDatabase() {
   }
 }
 
+// Start the server and initialize the database
 const hashSessionToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 
 const getSessionToken = (req) => {
@@ -247,6 +251,7 @@ const setSessionCookie = (res, token, maxAgeSeconds) => {
   );
 };
 
+// New user sessions creation with secure token generated
 const createUserSession = async (userId, res) => {
   const token = crypto.randomBytes(32).toString('hex');
   const expiresAt = new Date(Date.now() + sessionLifetimeMs);
@@ -292,6 +297,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+// Main app and login pages
 app.get('/', (req, res) => {
   res.sendFile(path.join(projectRoot, 'public', 'index.html'));
 });
@@ -300,6 +306,7 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(projectRoot, 'public', 'login.html'));
 });
 
+// Community feed routes: fetch posts, manage media, and share updates.
 app.get('/api/posts', requireAuthenticatedUser, async (req, res) => {
   const feed = typeof req.query.feed === 'string' ? req.query.feed : 'recent';
   if (!['recent', 'mine', 'recommended', 'friends'].includes(feed)) {
@@ -328,30 +335,45 @@ app.get('/api/posts', requireAuthenticatedUser, async (req, res) => {
       );
     } else if (feed === 'recommended') {
       result = await pool.query(`
-        WITH latest_goals AS (
+        WITH recent_goals AS (
           SELECT DISTINCT ON (user_id) user_id, goal_type, fitness_level
           FROM goals
           WHERE goal_type IS NOT NULL OR fitness_level IS NOT NULL
           ORDER BY user_id, created_at DESC, id DESC
         ),
-        preferences AS (
-          SELECT users.id,
-                 COALESCE(NULLIF(BTRIM(users.goal_type), ''), NULLIF(BTRIM(latest_goals.goal_type), '')) AS goal_type,
-                 COALESCE(NULLIF(BTRIM(users.fitness_level), ''), NULLIF(BTRIM(latest_goals.fitness_level), '')) AS fitness_level
+        user_preferences AS (
+          SELECT
+            users.id,
+            COALESCE(NULLIF(BTRIM(users.goal_type), ''), NULLIF(BTRIM(recent_goals.goal_type), '')) AS goal_type,
+            COALESCE(NULLIF(BTRIM(users.fitness_level), ''), NULLIF(BTRIM(recent_goals.fitness_level), '')) AS fitness_level
           FROM users
-          LEFT JOIN latest_goals ON latest_goals.user_id = users.id
+          LEFT JOIN recent_goals ON recent_goals.user_id = users.id
         )
-        SELECT posts.id, posts.user_id, posts.title, posts.contents, posts.image_urls, posts.video_urls, posts.created_at,
-               users.name AS author,
-               (CASE WHEN viewer.goal_type IS NOT NULL
-                           AND LOWER(BTRIM(author_preferences.goal_type)) = LOWER(BTRIM(viewer.goal_type)) THEN 1 ELSE 0 END
-                + CASE WHEN viewer.fitness_level IS NOT NULL
-                            AND LOWER(BTRIM(author_preferences.fitness_level)) = LOWER(BTRIM(viewer.fitness_level)) THEN 1 ELSE 0 END
-               ) AS recommendation_score
+        SELECT
+          posts.id,
+          posts.user_id,
+          posts.title,
+          posts.contents,
+          posts.image_urls,
+          posts.video_urls,
+          posts.created_at,
+          users.name AS author,
+          (
+            CASE
+              WHEN viewer.goal_type IS NOT NULL
+                AND LOWER(BTRIM(author_preferences.goal_type)) = LOWER(BTRIM(viewer.goal_type))
+              THEN 1 ELSE 0
+            END +
+            CASE
+              WHEN viewer.fitness_level IS NOT NULL
+                AND LOWER(BTRIM(author_preferences.fitness_level)) = LOWER(BTRIM(viewer.fitness_level))
+              THEN 1 ELSE 0
+            END
+          ) AS recommendation_score
         FROM posts
         JOIN users ON users.id = posts.user_id
-        JOIN preferences AS author_preferences ON author_preferences.id = posts.user_id
-        CROSS JOIN preferences AS viewer
+        JOIN user_preferences AS author_preferences ON author_preferences.id = posts.user_id
+        CROSS JOIN user_preferences AS viewer
         WHERE posts.user_id <> $1
           AND viewer.id = $1
           AND (
@@ -384,6 +406,7 @@ app.get('/api/posts', requireAuthenticatedUser, async (req, res) => {
   }
 });
 
+// User authentication and account creation routes
 app.post('/api/logout', async (req, res) => {
   const token = getSessionToken(req);
   try {
@@ -556,6 +579,7 @@ app.post('/api/posts', requireAuthenticatedUser, (req, res, next) => {
   }
 });
 
+// Fetch posts, manage media, and share updates in the community feed
 app.put('/api/posts/:postId', requireAuthenticatedUser, async (req, res) => {
   const postId = Number(req.params.postId);
   const userId = req.authenticatedUser.id;
@@ -635,6 +659,7 @@ app.delete('/api/posts/:postId', requireAuthenticatedUser, async (req, res) => {
   }
 });
 
+// User authentication and account creation routes
 app.post('/api/users', async (req, res) => {
   const { name, email, password, weight_kg, height_cm, goal_type, fitness_level } = req.body;
 
@@ -686,6 +711,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// User goals and meal tracking routes
 app.post('/api/goals', async (req, res) => {
   const { user_id, title, description, goal_type, equipment, fitness_level, target_weight, daily_steps } = req.body;
 
@@ -746,6 +772,7 @@ app.get('/api/meals/:userId', async (req, res) => {
   }
 });
 
+// Start the server and initialize the database
 initializeDatabase().then(() => {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
